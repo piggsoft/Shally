@@ -11,6 +11,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 /**
  * @author yaochen4
@@ -33,7 +34,9 @@ public class DbRealm extends AuthorizingRealm {
         // 通过表单接收的用户名
         String username = token.getUsername();
         if (username != null && !"".equals(username)) {
-            return new SimpleAuthenticationInfo(username, token.getPassword(), getName());
+            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(username, "ca86ce2323a3421a3f4277fdc69a86db", getName());
+            info.setCredentialsSalt(ByteSource.Util.bytes(username + "64eeee6a9ba7ae3aace2c48bbb6782a3"));
+            return info;
         }
 
         return null;
