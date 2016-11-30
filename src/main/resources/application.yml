@@ -33,6 +33,10 @@ spring:
 # 合并多个DruidDataSource的监控数据
 #   useGlobalDataSourceStat: true
 logging:
-  level: debug
+  level:
+    root: info
+    com.piggsoft: debug
 server:
   port: 8081
+mybatis:
+  check-config-location: false
