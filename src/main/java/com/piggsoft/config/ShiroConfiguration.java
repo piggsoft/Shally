@@ -44,6 +44,8 @@ public class ShiroConfiguration {
 	@DependsOn("lifecycleBeanPostProcessor")
     public DbRealm shiroRealm() {
 		DbRealm realm = new DbRealm();
+		realm.setCachingEnabled(true);
+		realm.setAuthenticationCachingEnabled(true);
 		realm.setCredentialsMatcher(hashedCredentialsMatcher());
         return realm;
     }
@@ -76,14 +78,14 @@ public class ShiroConfiguration {
 		shiroFilterFactoryBean.setFilters(filters);
 		
 		Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
-		filterChainDefinitionManager.put("/logout", "logout");
+		filterChainDefinitionManager.put("/user/logout", "logout");
 		filterChainDefinitionManager.put("/user/**", "authc");
 		filterChainDefinitionManager.put("/shop/**", "authc");
 		filterChainDefinitionManager.put("/admin/**", "authc");
 		filterChainDefinitionManager.put("/**", "anon");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 		
-		shiroFilterFactoryBean.setLoginUrl("/login");
+		shiroFilterFactoryBean.setLoginUrl("/user/login");
 		shiroFilterFactoryBean.setSuccessUrl("/");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		

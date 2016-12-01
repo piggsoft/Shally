@@ -7,11 +7,14 @@
  */
 package com.piggsoft.config;
 
+import com.piggsoft.model.User;
+import com.piggsoft.service.IUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author yaochen4
@@ -21,6 +24,8 @@ import org.apache.shiro.util.ByteSource;
  */
 public class DbRealm extends AuthorizingRealm {
 
+    @Autowired
+    private IUserService userService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -33,9 +38,10 @@ public class DbRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) at;
         // 通过表单接收的用户名
         String username = token.getUsername();
-        if (username != null && !"".equals(username)) {
-            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(username, "ca86ce2323a3421a3f4277fdc69a86db", getName());
-            info.setCredentialsSalt(ByteSource.Util.bytes(username + "64eeee6a9ba7ae3aace2c48bbb6782a3"));
+        User user = userService.queryUserByUsername(username);
+        if (null != user) {
+            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+            info.setCredentialsSalt(ByteSource.Util.bytes(user.getUsername() + user.getPasswordSalt()));
             return info;
         }
 

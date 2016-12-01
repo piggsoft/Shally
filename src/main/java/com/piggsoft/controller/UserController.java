@@ -8,11 +8,9 @@
 package com.piggsoft.controller;
 
 import com.piggsoft.model.User;
+import com.piggsoft.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,37 +23,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 1.0
  */
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/user")
 public class UserController {
 
-
     @Autowired
-    private HashedCredentialsMatcher matcher;
+    private IUserService userService;
 
-    @RequestMapping
-    public void login() {
+    @RequestMapping(("/login"))
+    public String login(User user) {
         SecurityUtils.getSecurityManager().logout(SecurityUtils.getSubject());
         // 登录后存放进shiro token
-        UsernamePasswordToken token = new UsernamePasswordToken("aaaa", "bbbb");
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
+        return "redirect:/index.html";
     }
 
+    @RequestMapping("/register")
     public void register(User user) {
-        String username = user.getUsername();
-        String passwordSalt = new SecureRandomNumberGenerator().nextBytes().toHex();
-        String salt = username + passwordSalt;
-        user.setPasswordSalt(passwordSalt);
-        SimpleHash hash = new SimpleHash(matcher.getHashAlgorithmName(), user.getPassword(), salt, matcher.getHashIterations());
-        user.setPassword(hash.toHex());
-    }
-
-    public static void main(String[] args) {
-        String passwordSalt = new SecureRandomNumberGenerator().nextBytes().toHex();
-        String salt = "aaaa" + passwordSalt;
-        System.out.println(passwordSalt);
-        SimpleHash hash = new SimpleHash("MD5", "bbbb", salt, 2);
-        System.out.println(hash.toHex());
+        userService.register(user);
     }
 
 }

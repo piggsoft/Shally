@@ -25,4 +25,8 @@ public interface UserMapper {
     @Select("select * from t_user where username = #{username}")
     User queryUserByUsername(@Param("username") String username);
 
+    @Insert("insert into t_user (id, username, password, password_salt) values(null, #{username}, #{password}, #{passwordSalt})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", before = false, resultType = Integer.class, keyProperty = "id", keyColumn = "id")
+    int saveUser(User user);
+
 }

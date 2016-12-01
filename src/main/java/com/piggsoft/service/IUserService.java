@@ -7,6 +7,8 @@
  */
 package com.piggsoft.service;
 
+import com.piggsoft.model.User;
+
 /**
  * @author yaochen4
  * @version 1.0
@@ -14,4 +16,8 @@ package com.piggsoft.service;
  * @since 1.0
  */
 public interface IUserService {
+
+    int register(User user);
+
+    User queryUserByUsername(String username);
 }
