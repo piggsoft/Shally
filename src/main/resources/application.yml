@@ -44,3 +44,5 @@ server:
   port: 8081
 mybatis:
   check-config-location: false
+beetl:
+  templates-path: templates
