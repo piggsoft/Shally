@@ -9,6 +9,9 @@ package com.piggsoft.service;
 
 import com.piggsoft.model.User;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author yaochen4
  * @version 1.0
@@ -17,7 +20,9 @@ import com.piggsoft.model.User;
  */
 public interface IUserService {
 
-    int register(User user);
+    long register(User user);
 
     User queryUserByUsername(String username);
+
+    Set<String> findRolesByUsername(String username);
 }

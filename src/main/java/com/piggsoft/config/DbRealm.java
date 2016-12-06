@@ -29,6 +29,7 @@ public class DbRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        String username = (String)principals.getPrimaryPrincipal();
         return null;
     }
 

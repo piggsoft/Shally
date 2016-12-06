@@ -16,6 +16,9 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author yaochen4
  * @version 1.0
@@ -32,7 +35,7 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public int register(User user) {
+    public long register(User user) {
         String username = user.getUsername();
         String passwordSalt = new SecureRandomNumberGenerator().nextBytes().toHex();
         String salt = username + passwordSalt;
@@ -46,5 +49,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User queryUserByUsername(String username) {
         return userMapper.queryUserByUsername(username);
+    }
+
+    @Override
+    public Set<String> findRolesByUsername(String username)  {
+        return new HashSet<>(userMapper.findRoleByUsername(username));
     }
 }

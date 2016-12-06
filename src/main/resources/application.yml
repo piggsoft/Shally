@@ -31,7 +31,11 @@ spring:
 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 # 合并多个DruidDataSource的监控数据
-#   useGlobalDataSourceStat: true
+   useGlobalDataSourceStat: true
+   #控制读取sql文件是哪个
+   platform: debug
+   #是否进行脚本初始化
+   initialize: false
   mvc:
     date-format: yyyy-MM-dd
     favicon:

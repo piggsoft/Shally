@@ -6,6 +6,8 @@ import com.piggsoft.service.IUserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 /**
@@ -24,8 +26,14 @@ public class UserServiceImplTest extends ShallyCoreApplicationTests {
         User user = new User();
         user.setUsername("aaaa");
         user.setPassword("bbbb");
-        int id = userService.register(user);
+        long id = userService.register(user);
         System.out.println(user);
+    }
+
+    @Test
+    public void findRoles() {
+        Set<String> result = userService.findRolesByUsername("aaaa");
+        System.out.println(result);
     }
 
 }

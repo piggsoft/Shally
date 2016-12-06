@@ -4,7 +4,7 @@ package com.piggsoft.model;
  * Created by piggs on 2016/11/26.
  */
 public class User {
-    private int id;
+    private long id;
     private String username;
     private String password;
 
@@ -34,11 +34,11 @@ public class User {
         this.passwordSalt = passwordSalt;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }
