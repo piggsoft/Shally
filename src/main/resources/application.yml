@@ -40,6 +40,8 @@ spring:
     date-format: yyyy-MM-dd
     favicon:
       enabled: true
+    view:
+      suffix: .html
 logging:
   level:
     root: info
@@ -49,4 +51,4 @@ server:
 mybatis:
   check-config-location: false
 beetl:
-  templates-path: templates
+  templates-path: templates/

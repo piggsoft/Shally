@@ -15,7 +15,11 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author yaochen4
@@ -44,6 +48,12 @@ public class UserController {
     @RequiresRoles("admin")
     public void register(User user) {
         userService.register(user);
+    }
+
+    @RequestMapping()
+    public String hello(Model model, HttpSession session) {
+        model.addAttribute("title", "this is a title");
+        return "/admin/index";
     }
 
 }
